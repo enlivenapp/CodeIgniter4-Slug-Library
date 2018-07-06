@@ -1,20 +1,20 @@
 # CodeIgniter4 Slug Library
 
-## Notice: NOT Compatible with CodeIgniter 2 or 3
+## Notice: NOT Compatible with CodeIgniter < v4
 
  
  This library is designed to help you generate friendly uri strings for your content stored in the database.
  
- For example if you have a blog post table then you would want uri strings such as: mysite.com/post/my-post-title
+ For example if you have a blog post table then you would want uri strings such as: example.com/post/my-post-title
  
  The problem with this is each post needs a unique uri string and this library is designed to handle that for you.
  
- So if you add another with the same uri or title it would convert it to: mysite.com/post/my-post-title-2
+ So if you add another with the same uri or title it would convert it to: example.com/post/my-post-title-2
  
  # Requirements
  
  * CodeIgniter4
- * PHP >7.0
+ * PHP > v7.0
  * Some form of database supported by Query Builder
  
  # Usage
@@ -23,16 +23,17 @@
 
  #### Controller  (`application/Controllers/MyController.php`)
 
- ```
- <?php namespace App\Controllers;
+```php
+<?php namespace App\Controllers;
 
 use CodeIgniter\Controller;
-use App\Libraries\Slug;
+use App\Libraries\Slug;   // use the Slug Library
 
 class MyController extends Controller
 {
 	public function index()
 	{
+		// create a new Slug object
 		$Slug = new Slug([
 				'field' => 'uri',
 				'title' => 'title',
@@ -40,6 +41,7 @@ class MyController extends Controller
 				'id' 	=> 'id',
 		]);
 
+		// get the new slug
 		$newURI = $Slug->create_uri(['title' => 'My Title']);
 
 		//...  the rest of your code
@@ -49,6 +51,7 @@ class MyController extends Controller
  
  Please note that these fields map to your database table fields.
  
+ ```php
  	$config = array(
  		'field' => 'uri',
  		'title' => 'title',
@@ -56,11 +59,13 @@ class MyController extends Controller
  		'id' => 'id',
  	);
  	$Slug = new Slug($config);
- 
+ ```
+
  ## Adding and Editing Records: 
  
  When creating a uri for adding to the database you will use something like this:
- 	
+ 
+ ```php	
  	$data = array(
         'title' => 'My title',
         'name'  => 'My Name',
@@ -69,10 +74,11 @@ class MyController extends Controller
     );
 
     $builder->insert($data);
+```
 
- 
  Then for editing: (Notice the create_uri uses the second param to compare against other fields).
  
+ ```php
  	$id = 1;
 
  	$data = array(
@@ -84,10 +90,10 @@ class MyController extends Controller
 
     $builder->where('id', $id);
     $builder->update($data);
-
+```
 
  
-## Methods
+## Public Methods
  
 ### __construct($config = array())
 
@@ -117,7 +123,7 @@ Setup the library with your config options.
  $data = array(
  	'title' => 'My Test',
  );
- $$Slug->create_uri($data)
+ $Slug->create_uri($data)
  ```
  
  ```php
@@ -134,11 +140,4 @@ Setup the library with your config options.
  $Slug->create_uri($data)
  ```
  
- ```php
- $data = (object)[];
- $data->title = 'My Test',
- 
- $Slug->create_uri($data, 1)
- ```
- 
-  This returns a string of the new uri.
+This returns a string of the new uri.
