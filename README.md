@@ -21,7 +21,7 @@
  
  ## Here is an example setup:
 
- #### Controller  (`application/Controllers/MyController`)
+ #### Controller  (`application/Controllers/MyController.php`)
 
  ```
  <?php namespace App\Controllers;
@@ -58,7 +58,6 @@ class MyController extends Controller
  	$Slug = new Slug($config);
  
  ## Adding and Editing Records: 
- [CI4 Insert Doc](https://bcit-ci.github.io/CodeIgniter4/database/query_builder.html#inserting-data)
  
  When creating a uri for adding to the database you will use something like this:
  	
@@ -105,31 +104,12 @@ Setup the library with your config options.
 		]);
  ```
  
- ### set_config($config = array())
- 
- Pass an array of config vars that will override setup
- 
- **Paramaters**
- 
- * $config - (required) - Array of config options
- 
- ```php
- $config = array(
- 	'table' => 'mytable',
- 	'id' => 'id',
- 	'field' => 'uri',
- 	'title' => 'title',
- 	'replacement' => 'dash' // 'dash' or 'underscore'
- );
- $this->slug->set_config($config);
- ```
  ### create_uri($data = '', $id = '')
  
  Creates the actual uri string and in the background validates against the table to ensure it is unique.
   
   **Paramaters**
   
-  * $data - (requied) Array of data
   * $data - (requied) Array or object of data
   * $id - (optional) Id of current record
   
@@ -137,28 +117,28 @@ Setup the library with your config options.
  $data = array(
  	'title' => 'My Test',
  );
- $this->slug->create_uri($data)
+ $$Slug->create_uri($data)
  ```
  
  ```php
  $data = array(
  	'title' => 'My Test',
  );
-  $this->slug->create_uri($data, 1)
+  $Slug->create_uri($data, 1)
   ```
   
  ```php
  $data = (object)[];
  $data->title = 'My Test',
  
- $this->slug->create_uri($data)
+ $Slug->create_uri($data)
  ```
  
  ```php
  $data = (object)[];
  $data->title = 'My Test',
  
- $this->slug->create_uri($data, 1)
+ $Slug->create_uri($data, 1)
  ```
  
   This returns a string of the new uri.
