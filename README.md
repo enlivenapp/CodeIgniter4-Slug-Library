@@ -15,11 +15,37 @@
  
  * CodeIgniter4
  * PHP >7.0
- * Some form of database supported by active record
+ * Some form of database supported by Query Builder
  
  # Usage
  
  ## Here is an example setup:
+
+ #### Controller  (`application/Controllers/MyController`)
+
+ ```
+ <?php namespace App\Controllers;
+
+use CodeIgniter\Controller;
+use App\Libraries\Slug;
+
+class MyController extends Controller
+{
+	public function index()
+	{
+		$Slug = new Slug([
+				'field' => 'uri',
+				'title' => 'title',
+				'table' => 'slugs',
+				'id' 	=> 'id',
+		]);
+
+		$newURI = $Slug->create_uri(['title' => 'My Title']);
+
+		//...  the rest of your code
+	}
+}
+ ```
  
  Please note that these fields map to your database table fields.
  
@@ -29,43 +55,54 @@
  		'table' => 'mytable',
  		'id' => 'id',
  	);
- 	$this->load->library('slug', $config);
+ 	$Slug = new Slug($config);
  
- ## Adding and Editing Records:
+ ## Adding and Editing Records: 
+ [CI4 Insert Doc](https://bcit-ci.github.io/CodeIgniter4/database/query_builder.html#inserting-data)
  
  When creating a uri for adding to the database you will use something like this:
- 
+ 	
  	$data = array(
- 		'title' => 'My Test',
- 	);
- 	$data['uri'] = $this->slug->create_uri($data);
- 	$this->db->insert('mytable, $data);
+        'title' => 'My title',
+        'name'  => 'My Name',
+        'date'  => 'My date',
+        'uri'	=> $Slug->create_uri(['title' => 'My Title'])
+    );
+
+    $builder->insert($data);
+
  
  Then for editing: (Notice the create_uri uses the second param to compare against other fields).
  
  	$id = 1;
+
  	$data = array(
- 		'title' => 'My Test',
- 	);
- 	$data['uri'] = $this->slug->create_uri($data, $id);
- 	$this->db->where('id', $id);
- 	$this->db->update('mytable', $data);
+        'title' => 'My title',
+        'name'  => 'My Name',
+        'date'  => 'My date',
+        'uri'	=> $Slug->create_uri(['title' => 'My Title'], $id)
+    );
+
+    $builder->where('id', $id);
+    $builder->update($data);
+
+
  
- ## Methods
+## Methods
  
- ### __construct($config = array())
+### __construct($config = array())
+
 
 Setup the library with your config options.
  
  ```php
- $config = array(
- 	'table' => 'mytable',
- 	'id' => 'id',
- 	'field' => 'uri',
- 	'title' => 'title',
- 	'replacement' => 'dash' // Either dash or underscore
- );
- $this->load->library('slug', $config);
+     $Slug = new Slug([
+			'table' => 'mytable',
+			'id' => 'id',
+			'field' => 'uri',
+			'title' => 'title',
+			'replacement' => 'dash' // Either dash or underscore
+		]);
  ```
  
  ### set_config($config = array())
