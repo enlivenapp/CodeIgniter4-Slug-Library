@@ -82,10 +82,10 @@ class MyController extends Controller
  	$id = 1;
 
  	$data = array(
-        'title' => 'My title',
-        'name'  => 'My Name',
-        'date'  => 'My date',
-        'uri'	=> $Slug->create_uri(['title' => 'My Title'], $id)
+         'title' => 'My title',
+         'name'  => 'My Name',
+         'date'  => 'My date',
+         'uri'	 => $Slug->create_uri(['title' => 'My Title'], $id)
     );
 
     $builder->where('id', $id);
@@ -141,3 +141,13 @@ Setup the library with your config options.
  ```
  
 This returns a string of the new uri.
+
+
+### Reference
+
+* [CodeIgniter 4 Docs](https://bcit-ci.github.io/CodeIgniter4/index.html)
+* [Original Slug Library](https://github.com/ericlbarnes/CodeIgniter-Slug-Library)
+
+### Original Author
+
+* [Eric Barnes](https://github.com/ericlbarnes)
